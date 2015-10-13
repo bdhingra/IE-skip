@@ -2,9 +2,9 @@ import vocab
 import train
 
 # paths for input, output
-data_path = '../bookcorpus/books_large_p1.txt'
-dict_path = '../bookcorpus/books_dict.txt'
-out_path = '../bookcorpus/books_out.npz'
+data_path = '../drugdata/stuffForBD.gp'
+dict_path = '../drugdata/dict.txt'
+out_path = '../drugdata/output.npz'
 
 # params
 N = 5000

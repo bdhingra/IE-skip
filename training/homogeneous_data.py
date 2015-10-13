@@ -145,9 +145,17 @@ def grouper(text):
     """
     Group text into triplets
     """
-    source = text[1:][:-1]
-    forward = text[2:]
-    backward = text[:-2]
+    # old code commented out
+    #source = text[1:][:-1]
+    #forward = text[2:]
+    #backward = text[:-2]
+    #X = (source, forward, backward)
+    #return X
+
+    # new code
+    source = text[1::2]
+    forward = text[2::2]
+    backward = text[0::2]
     X = (source, forward, backward)
     return X
 
