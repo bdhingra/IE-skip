@@ -27,10 +27,11 @@ stop_path = '../preprocess/punctuations.txt'
 
 # params
 #N = 5000
-max_e = 10
-dispF = 10
+max_e = 5
+dispF = 1
 max_w = 50
-saveF = 10;
+saveF = 1000
+batch = 64
 
 # load the data and put in list
 f = open(data_path, 'r')
@@ -53,4 +54,4 @@ worddict, wordcount = vocab.build_dictionary(X)
 vocab.save_dictionary(worddict, wordcount, dict_path)
 
 # train
-train.trainer(X, saveto=out_path, dictionary=dict_path, saveFreq=saveF, max_epochs=max_e, dispFreq=dispF, maxlen_w=max_w)
+train.trainer(X, saveto=out_path, dictionary=dict_path, saveFreq=saveF, max_epochs=max_e, dispFreq=dispF, maxlen_w=max_w, batch_size=batch)
