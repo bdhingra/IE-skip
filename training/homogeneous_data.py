@@ -153,9 +153,9 @@ def grouper(text):
     #return X
 
     # new code
-    source = text[1::2]
-    forward = text[2::2]
-    backward = text[0::2]
+    source = text[1::3]
+    forward = text[2::3]
+    backward = text[0::3]
     X = (source, forward, backward)
     return X
 

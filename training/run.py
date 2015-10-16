@@ -1,5 +1,6 @@
 import vocab
 import train
+import re
 
 def removeID(X):
     out = []
@@ -16,7 +17,7 @@ def removeStopWords(X, path):
     stops = f.read().splitlines()
     out = []
     for line in X:
-	out.append(" ".join([word for word in line.split() if word not in stops]))
+	out.append(re.sub(r'[0-9]+','#'," ".join([word for word in line.split() if word not in stops])))
     return out
 
 # paths for input, output
