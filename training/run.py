@@ -1,54 +1,44 @@
 import vocab
 import train
 import re
-
-def removeID(X):
-    out = []
-    for line in X:
-	cols = line.split("\t")
-	if len(cols) > 1:
-	    out.append(cols[1].lower())
-	else:
-	    out.append("")
-    return out
-
-def removeStopWords(X, path):
-    f = open(path, 'r')
-    stops = f.read().splitlines()
-    out = []
-    for line in X:
-	out.append(re.sub(r'[0-9]+','#'," ".join([word for word in line.split() if word not in stops])))
-    return out
+import preprocess
 
 # paths for input, output
 data_path = '../../data/drugdata/stuffForBD.gp'
-dict_path = '../drugdata/dict.pkl'
-out_path = '../drugdata/output.npz'
+proc_data_path = '../drugdata/exp3/processed.txt'
+dict_path = '../drugdata/exp3/dict.pkl'
+out_path = '../drugdata/exp3/output.npz'
 stop_path = '../preprocess/punctuations.txt'
 
+reload_ = True
+
 # params
-#N = 5000
+N = 500000
 max_e = 5
 dispF = 1
 max_w = 50
 saveF = 1000
 batch = 64
+clen = 6
 
-# load the data and put in list
-f = open(data_path, 'r')
-X = f.read().splitlines()
+if not reload_:
+    # load the data and put in list
+    f = open(data_path, 'r')
+    X = f.read().splitlines()
 
-# preprocess
-X = removeID(X)
-X = removeStopWords(X, stop_path)
+    # preprocess
+    X = preprocess.prepareentitylist(X, stop_path, clen)
 
-# store for future
-f = open('../drugdata/processed.txt','w')
-for item in X:
-    f.write('%s\n' % item)
+    # store for future
+    f = open(proc_data_path,'w')
+    for item in X:
+	f.write('%s\n' % item)
+else:
+    f = open(proc_data_path,'r')
+    X = f.read().splitlines()
 
-# choose subset of data
-#X = X[:N]
+# subset
+X = X[:N]
 
 # build dictionary
 worddict, wordcount = vocab.build_dictionary(X)
