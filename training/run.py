@@ -2,6 +2,9 @@ import vocab
 import train
 import re
 import preprocess
+import homogeneous_data
+import cPickle as pkl
+import sys
 
 # paths for input, output
 data_path = '../../data/drugdata/stuffForBD.gp'
@@ -13,7 +16,7 @@ stop_path = '../preprocess/punctuations.txt'
 reload_ = True
 
 # params
-N = 500000
+N = 500001
 max_e = 5
 dispF = 1
 max_w = 50
