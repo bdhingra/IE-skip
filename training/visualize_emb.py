@@ -4,13 +4,14 @@ import string
 import sys
 
 # paths
-entpath = '../drugdata/exp2/test_ent.txt'
-vecpath = '../drugdata/exp2/vectors.txt.npy'
-outpath = '../drugdata/exp2/knn.txt'
+entpath = '../drugdata/exp3/test_ent.txt'
+vecpath = '../drugdata/exp3/vectors.txt.npy'
+outpath = '../drugdata/exp3/knn.txt'
 
 # params
-k = 10
-n = 1000
+k = 5
+n = 100
+t = 1000
 
 # load vectors
 vec = np.load(open(vecpath,'r'))
@@ -19,8 +20,12 @@ vec = np.load(open(vecpath,'r'))
 with open(entpath, 'r') as f:
     xp = f.read().splitlines()
 
+vec = vec[:t]
+xp = xp[:t]
+
 # choose random subset
 assert len(xp) == len(vec), "vectors not the same length as entity list"
+rnd.seed(0)
 test_idx = rnd.sample(range(len(xp)), n)
 test_vec = [vec[idx] for idx in test_idx]
 test_ent = [xp[idx] for idx in test_idx]

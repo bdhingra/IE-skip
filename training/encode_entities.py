@@ -12,7 +12,7 @@ ent_path = '../drugdata/exp2/test_ent.txt'
 
 # params
 clen = 6
-reload_ = True
+reload_ = False
 
 # model
 if not reload_:
