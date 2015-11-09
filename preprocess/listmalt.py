@@ -70,7 +70,7 @@ class Sentence(object):
 
     @staticmethod
     def parseBlock(block):
-        sdict = {}
+	sdict = {}
         for line in block:
             tok = Token.parseLine(line)
             sdict[tok.index] = tok
@@ -241,8 +241,8 @@ class CoordList(object):
         #lo = max(self.lo()-window,0)
         #hi = min(self.hi()+window,sent.numWords() - 1)
         #return str( sent.words(lo,self.lo()-1) ) + str( sent.words(self.lo(),self.hi()) ) + str( sent.words(self.hi()+1,hi) ) + str(sent.words())
-	lo = 1
-	hi = sent.numWords() - 1
+	lo = max(self.lo()-window,0)
+	hi = min(self.hi()+window,sent.numWords()-1)
 	if self.lo() == 1:
 	    cbefore = []
 	else:
@@ -311,12 +311,13 @@ def sentFileName(s):
 class ListMalt(Planner):
 
     blocks = ReadBlocks(INPUT)
-    sents = ReplaceEach(blocks, by=lambda block:Sentence.parseBlock(block)) 
+    sents = ReplaceEach(blocks, by=lambda block:Sentence.parseBlock(block))
     
     sentInfo = ReplaceEach(sents, by=lambda s:(s.sid(),sentFileName(s))) | Format(by=lambda (sid,info):'\t'.join([sid,info]))
 
     realSents = Filter(sents, by=lambda s:MIN_SENTENCE_LEN<=s.numWords()<=MAX_SENTENCE_LEN)
     viewableSents = ReplaceEach(realSents, by=lambda s:(s.sid(),s.words()))  #something I can read, for debugging
+
 
     #pairs 
 
@@ -358,7 +359,7 @@ class ListMalt(Planner):
     listsAsGraph = Format(listsWithItems, by=lambda(lid,words):'%s\t%s' % (lid,(" ".join(words)).lower()))
 
     stuffForBD = Flatten(sentencesWithLists, by=lambda(s,coordLists):[(s,cList) for cList in coordLists.values()]) \
-                 | Flatten(by=lambda(s,cList):[(cList.cListId(s),c) for c in cList.asStringWithContext(s,3)]) | \
+                 | Flatten(by=lambda(s,cList):[(cList.cListId(s),c) for c in cList.asStringWithContext(s,5)]) | \
 		 Format(by=lambda(row):'%s\t%s' % (row[0]," ".join(row[1])))
 
     #main output 2: lists with features, in format: listId <TAB> feat1 <TAB> ...
