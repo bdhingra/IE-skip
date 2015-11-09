@@ -7,21 +7,21 @@ import cPickle as pkl
 import sys
 
 # paths for input, output
-data_path = '../../data/drugdata/stuffForBD.gp'
-proc_data_path = '../drugdata/exp3/processed.txt'
-dict_path = '../drugdata/exp3/dict.pkl'
-out_path = '../drugdata/exp3/output.npz'
+data_path = '../preprocess/gpig_views/stuffForBD.gp'
+proc_data_path = '../drugdata/exp4/processed.txt'
+dict_path = '../drugdata/exp4/dict.pkl'
+out_path = '../drugdata/exp4/output.npz'
 stop_path = '../preprocess/punctuations.txt'
 
-reload_ = True
+reload_ = False
 
 # params
 N = 500001
 max_e = 5
 dispF = 1
-max_w = 50
+max_w = 10
 saveF = 1000
-batch = 64
+batch = 128
 clen = 6
 
 if not reload_:

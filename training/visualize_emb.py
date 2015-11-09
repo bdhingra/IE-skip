@@ -4,9 +4,9 @@ import string
 import sys
 
 # paths
-entpath = '../drugdata/exp3/test_ent.txt'
-vecpath = '../drugdata/exp3/vectors.txt.npy'
-outpath = '../drugdata/exp3/knn.txt'
+entpath = '../drugdata/exp4/entities.txt'
+vecpath = '../drugdata/exp4/vectors.txt.npy'
+outpath = '../drugdata/exp4/knn.txt'
 
 # params
 k = 5
@@ -20,19 +20,21 @@ vec = np.load(open(vecpath,'r'))
 with open(entpath, 'r') as f:
     xp = f.read().splitlines()
 
-vec = vec[:t]
-xp = xp[:t]
+test_vec = vec[:t]
+test_ent = xp[:t]
 
 # choose random subset
-assert len(xp) == len(vec), "vectors not the same length as entity list"
-rnd.seed(0)
-test_idx = rnd.sample(range(len(xp)), n)
-test_vec = [vec[idx] for idx in test_idx]
-test_ent = [xp[idx] for idx in test_idx]
+#assert len(xp) == len(vec), "vectors not the same length as entity list"
+#rnd.seed(0)
+#test_idx = rnd.sample(range(len(xp)), n)
+#test_vec = [vec[idx] for idx in test_idx]
+#test_ent = [xp[idx] for idx in test_idx]
 
 # find k-nearest neighbours to test set
 f = open(outpath,'w')
 for i,e in enumerate(test_ent):
+    if i % 100 == 0:
+	print("Test entity {}".format(i))
     v = test_vec[i]
     d = np.linalg.norm(vec-v,axis=1)
     min_idx = d.argsort()[:k]

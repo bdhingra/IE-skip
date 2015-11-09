@@ -22,8 +22,8 @@ from model import init_params, build_encoder, build_encoder_w2v
 #-----------------------------------------------------------------------------#
 # Specify model and dictionary locations here
 #-----------------------------------------------------------------------------#
-path_to_model = '/remote/curtis/bdhingra/skip-thoughts/drugdata/exp2/output.npz'
-path_to_dictionary = '/remote/curtis/bdhingra/skip-thoughts/drugdata/exp2/dict.pkl'
+path_to_model = '/remote/curtis/bdhingra/skip-thoughts/drugdata/exp4/output.npz'
+path_to_dictionary = '/remote/curtis/bdhingra/skip-thoughts/drugdata/exp4/dict.pkl'
 path_to_word2vec = '/remote/curtis/bdhingra/word2vec/GoogleNews-vectors-negative300.bin'
 #-----------------------------------------------------------------------------#
 

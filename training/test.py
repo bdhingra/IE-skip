@@ -8,6 +8,7 @@ import numpy as np
 import cPickle as pkl
 import re
 import math
+import sys
 
 from sklearn.decomposition import PCA
 from sklearn.svm import SVC
@@ -17,17 +18,17 @@ from sklearn.feature_extraction import DictVectorizer
 
 # paths
 stop_path = '../preprocess/punctuations.txt'
-model_save_path = '../drugdata/exp2/extmodel.pkl'
-vec_save_path = '../drugdata/exp2/test_vec.npy'
-fig_save_path = '../drugdata/exp2/test_fig.png'
-outFile = '../drugdata/exp2/out_emb.txt'
+model_save_path = '../drugdata/exp4/extmodel.pkl'
+vec_save_path = '../drugdata/exp4/test_vec.npy'
+fig_save_path = '../drugdata/exp4/test_fig.png'
+outFile = '../drugdata/exp4/out_emb.txt'
 bowFeatFile = '../../data/cleantest.txt'
 
 # params
-reload_model = True
-reload_vectors = True
+reload_model = bool(int(sys.argv[2]))
+reload_vectors = bool(int(sys.argv[3]))
 ndims = 1200
-Ce = 1e4
+Ce = int(sys.argv[1])
 Cb = 1e8
 K = 10
 
@@ -80,11 +81,11 @@ if not reload_vectors:
 else:
     vectors = np.load(open(vec_save_path,'r'))
 
-print len(vectors)
-print len(labels)
-print ent[0]
-print labels[0]
-print set(labels)
+#print len(vectors)
+#print len(labels)
+#print ent[0]
+#print labels[0]
+#print set(labels)
 
 # labels -> int
 le = LabelEncoder()
@@ -135,8 +136,9 @@ for train_index, test_index in skf:
     i = i+1
 
 # t statistic
-print pb
-print pe
+#print pb
+#print pe
+print "C = %d" % Ce
 print pb.mean()
 print pe.mean()
 print p.mean()*math.sqrt(K)/np.std(p,ddof=1)
